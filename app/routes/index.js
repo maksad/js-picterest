@@ -1,6 +1,7 @@
 'use strict';
 
 const path = process.cwd();
+const ImageHandler = require(path + '/app/controllers/imageHandler.server.js');
 
 module.exports = function (app, passport) {
   function isLoggedIn(req, res, next) {
@@ -10,6 +11,8 @@ module.exports = function (app, passport) {
       res.redirect('/login');
     }
   }
+
+  const imageHadler = new ImageHandler();
 
   app.route('/login')
     .get(function (req, res) {
@@ -46,4 +49,10 @@ module.exports = function (app, passport) {
     .get(isLoggedIn, function (req, res) {
       res.render('profile');
     });
+
+  app.route('/my-images')
+    .get(isLoggedIn, imageHadler.myImages);
+
+  app.route('/my-images')
+    .post(isLoggedIn, imageHadler.newImage);
 };

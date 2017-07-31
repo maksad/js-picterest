@@ -1,0 +1,42 @@
+extends layout.pug
+
+block content
+  form.col.s12(action='/my-images', method='POST')
+    .row.search-field
+      .input-field.col.s12
+        input(type='text', name='imageUrl')
+        label(
+          for='imageUrl'
+        ) Paste valid image URL here:
+
+      .input-field.col.s12
+        input#first_name.validate(name='imageDescription', type='text')
+        label(
+          for='imageDescription'
+        ) Write a short description about your image:
+
+      .input-field.col.s12
+        button.waves-effect.waves-light.btn(type='submit') Submit
+
+  if error
+    .row
+      .col.s12
+        .card.red.lighten-5.col.s12.remove-shadow
+          .card-content.col.s12
+            p= error
+
+  each image in JSON.parse(images)
+    .row
+      .col.s12
+        .card
+          .card-image
+            img.materialboxed(src=image.link)
+          .card-content
+            p= image.description
+          .card-action
+            a.red-text(href='delete/' + image._id) Delete
+
+  script.
+    $(document).ready(function(){
+      $('.materialboxed').materialbox();
+    });
