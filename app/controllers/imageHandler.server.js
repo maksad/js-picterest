@@ -3,17 +3,40 @@
 const Image = require('../models/image');
 
 function ImageHandler() {
+  this.deleteImage = function(req, res) {
+    const imageId = req.params.id;
+
+    if (!imageId) {
+      return res
+        .status(400)
+        .json({'error': 'Image id is missing'});
+    }
+
+    Image
+      .findOneAndRemove({
+        '_id': imageId,
+        'author': req.user.twitter.id
+      })
+      .catch((err) => {
+        return err;
+      })
+      .then(() => {
+        return res.redirect('/my-images');
+      });
+  }
+
   this.myImages = function(req, res) {
     let error = req.query.error;
     Image
       .find({'author': req.user.twitter.id})
       .exec((err, images) => {
+        if (err) { return err }
+
         res.render('my-images', {
           images: JSON.stringify(images),
           error: error
         });
       });
-
   }
 
   this.newImage = function(req, res) {

@@ -31,8 +31,9 @@ block content
         .card
           .card-image
             img.materialboxed(src=image.link)
-          .card-content
-            p= image.description
+          if image.description
+            .card-content
+              p= image.description
           .card-action
             a.red-text(href='delete/' + image._id) Delete
 

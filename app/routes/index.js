@@ -55,4 +55,7 @@ module.exports = function (app, passport) {
 
   app.route('/my-images')
     .post(isLoggedIn, imageHadler.newImage);
+
+  app.route('/delete/:id')
+    .get(isLoggedIn, imageHadler.deleteImage);
 };
