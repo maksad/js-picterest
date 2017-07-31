@@ -22,8 +22,9 @@ style(type='text/css').
         if image.description
           .card-content
             p= image.description
-        .card-action
-          a.red-text(href='delete/' + image._id) Delete
+        if deleteIsVisible
+          .card-action
+            a.red-text(href='delete/' + image._id) Delete
 
 script.
   $(document).ready(function(){

@@ -40,10 +40,7 @@ module.exports = function (app, passport) {
     }));
 
   app.route('/')
-    .get(function(req, res) {
-        res.render('home');
-      }
-    );
+    .get(imageHadler.allImages);
 
   app.route('/profile')
     .get(isLoggedIn, function (req, res) {

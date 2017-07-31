@@ -25,6 +25,17 @@ function ImageHandler() {
       });
   }
 
+  this.allImages = function(req, res) {
+    return Image
+      .find({}, (err, images) => {
+        if (err) { return err }
+
+        res.render('home', {
+          images: JSON.stringify(images)
+        });
+      });
+  }
+
   this.myImages = function(req, res) {
     let error = req.query.error;
     Image
@@ -34,7 +45,8 @@ function ImageHandler() {
 
         res.render('my-images', {
           images: JSON.stringify(images),
-          error: error
+          error: error,
+          deleteIsVisible: true
         });
       });
   }
