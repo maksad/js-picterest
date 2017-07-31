@@ -1,6 +1,14 @@
 extends layout.pug
 
 block content
+  style.
+    form {
+      padding: 20px;
+      background: #f1f1f1;
+      margin-top: 28px;
+      margin-bottom: 33px;
+    }
+
   form.col.s12(action='/my-images', method='POST')
     .row.search-field
       .input-field.col.s12
@@ -25,19 +33,4 @@ block content
           .card-content.col.s12
             p= error
 
-  each image in JSON.parse(images)
-    .row
-      .col.s12
-        .card
-          .card-image
-            img.materialboxed(src=image.link)
-          if image.description
-            .card-content
-              p= image.description
-          .card-action
-            a.red-text(href='delete/' + image._id) Delete
-
-  script.
-    $(document).ready(function(){
-      $('.materialboxed').materialbox();
-    });
+  include _list_of_images.pug
